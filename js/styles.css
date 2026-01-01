@@ -1,0 +1,64 @@
+:root{
+    --background: #cf85cf;
+    --highlights: #58bcff;
+    --alternative-text-color: #fff092;
+    --alternative-highlights:#ffbfbe;;
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    background-color: var(--background);
+    font-family: "Atkinson Hyperlegible Mono", sans-serif;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 10px;
+}
+form{
+    display: inline-grid;
+}
+form button{
+    width:fit-content;
+}
+    
+.div1 {
+    grid-column: span 2 / span 2;
+}
+
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 3;
+    margin: auto;
+}
+
+.div3 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 5;
+}
+
+.div4 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+.divTask{
+    display: grid;
+    background-color: var(--alternative-highlights);
+    color: var(--highlights);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+}
+.divTask button{
+    width: fit-content;
+    margin: auto;
+}
+
+.div5 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+        
