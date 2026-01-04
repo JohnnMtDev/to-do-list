@@ -1,58 +1,76 @@
+const form = document.querySelector('#form');
+const taskContainer = document.querySelector('#div4');
 
+/* ---------- LOCAL STORAGE HELPERS ---------- */
+const getTasks = () => JSON.parse(localStorage.getItem('tasks')) || [];
+const saveTasks = (tasks) => localStorage.setItem('tasks', JSON.stringify(tasks));
 
+/* ---------- CREATE TASK ---------- */
+const createTaskElement = (task) => {
+    const taskDiv = document.createElement('div');
+    taskDiv.className = 'divTask';
+
+    const taskText = document.createElement('p');
+    taskText.textContent = task.text;
+
+    const actions = document.createElement('div');
+    actions.className = 'task-actions';
+
+    const checkIcon = document.createElement('i');
+    checkIcon.className = `bi bi-check-circle ${task.completed ? 'check-icon' : ''}`;
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.className = 'bi bi-trash delete-icon';
+
+    if (task.completed) {
+        taskDiv.style.backgroundColor = '#fff092';
+    }
+
+    /* EVENTS */
+    checkIcon.addEventListener('click', () => {
+        task.completed = !task.completed;
+        taskDiv.style.backgroundColor = task.completed ? '#fff092' : '';
+        saveTasks(getTasks().map(t => t.id === task.id ? task : t));
+    });
+
+    deleteIcon.addEventListener('click', () => {
+        saveTasks(getTasks().filter(t => t.id !== task.id));
+        taskDiv.remove();
+    });
+
+    actions.appendChild(checkIcon);
+    actions.appendChild(deleteIcon);
+
+    taskDiv.appendChild(taskText);
+    taskDiv.appendChild(actions);
+
+    return taskDiv;
+};
+
+/* ---------- ADD TASK ---------- */
 const addTask = (e) => {
     e.preventDefault();
 
-    
-    let taskDescription = document.querySelector('#taskDesc').value;
-
-
-   
-    // Validate task description
-    if (!taskDescription || taskDescription.trim() === "") {
-        alert("The task description cannot be empty.");
-    } else if (taskDescription.length < 10 || taskDescription.length > 200) {
-        alert("The task description must be between 10 and 200 characters.");
-    } else if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,-]+$/.test(taskDescription)) {
-        alert("The task description contains invalid characters.");
-    } else if (/^\s+$/.test(taskDescription)) {
-        alert("The task description cannot be only whitespace.");
+    const taskDescription = taskDesc.value.trim();
+    if (taskDescription.length < 10 || taskDescription.length > 200) {
+        alert('Task must be between 10 and 200 characters');
+        return;
     }
 
-    let taskDiv = document.createElement('div');
-    taskDiv.classList ='divTask'; 
-    let remove = document.createElement('button');
-    remove.textContent = 'Remove';
-    let chekTask = document.createElement('input');
-    chekTask.type = 'checkbox';
-    
+    const newTask = {
+        id: Date.now(),
+        text: taskDescription,
+        completed: false
+    };
 
-    let taskDescP = document.createElement('p');
-    taskDescP.textContent = taskDescription;
+    const tasks = getTasks();
+    tasks.push(newTask);
+    saveTasks(tasks);
 
-   
-    taskDiv.appendChild(taskDescP);
-    taskDiv.appendChild(chekTask)
-    taskDiv.appendChild(remove);
-
-    document.querySelector('#div4').appendChild(taskDiv);
+    taskContainer.appendChild(createTaskElement(newTask));
     form.reset();
+};
 
-    
-
-    function removeTask() {
-        this.parentElement.remove();
-
-    }
-    remove.addEventListener('click', removeTask);
-
-    chekTask.addEventListener('change', ()=>{
-        taskDiv.style.backgroundColor = chekTask.checked ? '#fff092' : ''
-    })
-
-
-}
-let form = document.querySelector('#form');
-
-form.addEventListener("submit", addTask);
-
+/* ---------- LOAD ---------- */
+form.addEventListener('submit', addTask);
+getTasks().forEach(task => taskContainer.appendChild(createTaskElement(task)));

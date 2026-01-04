@@ -1,0 +1,81 @@
+:root {
+  --pink-bg: #f4c2d7;
+  --pink-soft: #f8d7e6;
+  --pink-active: #e89bb9;
+  --pink-accent: #d96c9f;
+  --pink-dark: #b84c7a;
+  --text-dark: #4a2b3a;
+  --text-light: #ffffff;
+}
+
+body {
+  background-color: var(--pink-bg);
+  font-family: "Atkinson Hyperlegible Mono", sans-serif;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 10px;
+}
+
+/* ===== FORM ===== */
+form {
+  display: inline-grid;
+  gap: 0.5rem;
+}
+
+form input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+}
+
+form button {
+  width: fit-content;
+  border-radius: 8px;
+  background-color: var(--pink-accent);
+  border: none;
+  color: var(--text-light);
+}
+
+/* ===== TAREA ===== */
+.divTask {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--pink-soft);
+  color: var(--text-dark);
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.divTask.activa {
+  background-color: var(--pink-active);
+  color: var(--text-light);
+}
+
+.divTask input[type="radio"] {
+  appearance: none;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.divTask input[type="radio"]::before {
+  content: "\f479";
+  font-family: "Bootstrap-icons";
+  font-size: 1.3rem;
+  color: var(--pink-accent);
+}
+
+.divTask input[type="radio"]:checked::before {
+  color: var(--text-light);
+}
+
+.btn-task {
+  background: transparent;
+  border: none;
+  margin-left: 0.75rem;
+  font-size: 1.2rem;
+  color: var(--pink-accent);
+}
